@@ -1,0 +1,48 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="vidhi">
+        <sql>
+            CREATE TABLE product (
+                product_id SERIAL PRIMARY KEY,
+                name VARCHAR(100),
+                price NUMERIC(10,2),
+                category VARCHAR(50)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="vidhi">
+        <sql>
+            CREATE TABLE men_clothing (
+                size VARCHAR(10),
+                fabric VARCHAR(50)
+            ) INHERITS (product);
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="vidhi">
+        <sql>
+            CREATE TABLE women_clothing (
+                style VARCHAR(50),
+                brand VARCHAR(50)
+            ) INHERITS (product);
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="vidhi">
+        <sql>
+            CREATE TABLE orders (
+                order_id SERIAL PRIMARY KEY,
+                product_id INT REFERENCES product(product_id),
+                quantity INT
+            );
+        </sql>
+    </changeSet>
+<!--Include optimization changes -->
+<include file="optimizations.xml"/>
+</databaseChangeLog>
